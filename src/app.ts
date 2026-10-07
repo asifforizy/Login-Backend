@@ -23,7 +23,7 @@ app.use(
 );
 
 app.get("/", async (req: Request, res: Response) => {
-  res.send("Starter Express API is running");
+  res.send("Login Backend  is running");
 });
 
 
