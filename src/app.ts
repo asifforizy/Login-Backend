@@ -4,6 +4,7 @@ import config from "./config";
 import cors from 'cors';
 import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
+import { AuthRoutes } from "./module/auth/auth.routes";
 
 
 
@@ -21,6 +22,9 @@ app.use(
     credentials: true
   })
 );
+
+
+app.use("/api/v1/auth", AuthRoutes);
 
 app.get("/", async (req: Request, res: Response) => {
   res.send("Login Backend  is running");
