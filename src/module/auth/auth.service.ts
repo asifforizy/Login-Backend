@@ -401,7 +401,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 					googleId: googleIdTokenPayload.sub,
 					authProvider: AuthProvider.GOOGLE,
 					emailVerified: true,
-					patient: {
+					user: {
 						create: {
 							name: googleIdTokenPayload.name,
 							email: googleIdTokenPayload.email,
