@@ -1,20 +1,27 @@
-/*
-  Warnings:
-
-  - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "AuthProvider" AS ENUM ('GOOGLE', 'CREDENTIAL');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER');
+CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'KIDS');
 
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BLOCKED', 'DELETED');
 
--- DropTable
-DROP TABLE "user";
+-- CreateTable
+CREATE TABLE "patients" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "contactNumber" TEXT,
+    "address" TEXT,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "patients_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -25,7 +32,7 @@ CREATE TABLE "users" (
     "googleId" TEXT,
     "authProvider" "AuthProvider" NOT NULL DEFAULT 'CREDENTIAL',
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
-    "role" "Role" NOT NULL DEFAULT 'USER',
+    "role" "Role" NOT NULL DEFAULT 'KIDS',
     "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
     "needPasswordChange" BOOLEAN NOT NULL DEFAULT false,
     "imageUrl" TEXT NOT NULL DEFAULT '',
@@ -39,7 +46,22 @@ CREATE TABLE "users" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "patients_email_key" ON "patients"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "patients_userId_key" ON "patients"("userId");
+
+-- CreateIndex
+CREATE INDEX "idx_patient_email" ON "patients"("email");
+
+-- CreateIndex
+CREATE INDEX "idx_patient_isDeleted" ON "patients"("isDeleted");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "users_googleId_key" ON "users"("googleId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- AddForeignKey
+ALTER TABLE "patients" ADD CONSTRAINT "patients_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

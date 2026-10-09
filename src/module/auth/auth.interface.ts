@@ -1,16 +1,15 @@
-import { Role } from "../../../generated/prisma/enums";
-
+import type { Role } from "../../../generated/prisma/browser";
 
 export interface ILoginUserPayload {
 	email: string;
 	password: string;
 }
 
-export interface IRegisterUserPayload {
+export interface IRegisterKidsPayload {
 	name: string;
 	email: string;
 	password: string;
-	user: {
+	kids: {
 		contactNumber?: string;
 	};
 }

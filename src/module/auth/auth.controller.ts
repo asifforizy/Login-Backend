@@ -9,7 +9,7 @@ import { AuthService } from "./auth.service";
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
 
-  await AuthService.registerUser(payload);
+  await AuthService.registerKids(payload);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
@@ -21,7 +21,7 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
 const verifyUserEmail = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
 
-  const result = await AuthService.verifyUserEmail(payload);
+  const result = await AuthService.verifyKidsEmail(payload);
 
   const { accessToken, refreshToken, user } = result;
 

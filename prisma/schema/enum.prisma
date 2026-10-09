@@ -6,7 +6,7 @@ enum AuthProvider {
 enum Role {
   SUPER_ADMIN
   ADMIN
-  USER
+  KIDS
 }
 
 enum UserStatus {
