@@ -17,5 +17,5 @@ model Kids {
   
   @@index([email], name: "idx_patient_email")
   @@index([isDeleted], name: "idx_patient_isDeleted")
-  @@map("patients")
+  @@map("kids")
 }
