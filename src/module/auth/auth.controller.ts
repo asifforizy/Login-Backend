@@ -185,6 +185,36 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+
+
+const resetCookies = catchAsync(async (req: Request, res: Response) => {
+  
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Password Changed Successfully",
+    data: null,
+  });
+});
+
+
+
+
+
+
 export const AuthController = {
   registerUser,
   verifyUserEmail,
